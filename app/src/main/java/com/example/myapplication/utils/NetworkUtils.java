@@ -53,7 +53,7 @@ public class NetworkUtils {
         return result;
     }
 
-    public static JSONObject getJSONFROM(int method, int page){
+    public static JSONObject getJSONFROMNetwork(int method, int page){
         JSONObject result = null;
         URL url = buildURL(method, page);
         try {
