@@ -17,10 +17,29 @@ import java.util.ArrayList;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private ArrayList<Movie> movies;    // Whole list of movies
+    private onPosterClickListener onPosterClickListener;
+    private onReachEndListener onReachEndListener;
+
+    public void setOnPosterClickListener(MovieAdapter.onPosterClickListener onPosterClickListener) {
+        this.onPosterClickListener = onPosterClickListener;
+    }
+
+    public void setOnReachEndListener(MovieAdapter.onReachEndListener onReachEndListener) {
+        this.onReachEndListener = onReachEndListener;
+    }
 
     public MovieAdapter() {
         movies = new ArrayList<>();
     }
+
+    interface onPosterClickListener{
+        void onPosterClick(int position);
+    }
+
+    interface onReachEndListener{
+        void onReachEnd();
+    }
+
 
 
     @NonNull
@@ -32,6 +51,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
+        if ((position > movies.size()-4) && (onReachEndListener != null)){
+            onReachEndListener.onReachEnd();
+        }
         Movie movie = movies.get(position);
         Picasso.get().load(movie.getPosterPath()).into(holder.imageViewSmallPoster);
     }
@@ -52,6 +74,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewSmallPoster = itemView.findViewById(R.id.imageViewSmallPoster);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onPosterClickListener != null){
+                        onPosterClickListener.onPosterClick(getAdapterPosition());
+                    }
+                }
+            });
         }
     }
     //

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -19,6 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="most popular"
+        android:textColor="@color/white_color"
+        android:onClick="setPopularity"
         app:layout_constraintBottom_toBottomOf="@+id/switchSort"
         app:layout_constraintEnd_toStartOf="@+id/switchSort"
         app:layout_constraintTop_toTopOf="@+id/switchSort" />
@@ -28,6 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="top rated"
+        android:textColor="@color/white_color"
+        android:onClick="setTopRated"
         app:layout_constraintBottom_toBottomOf="@+id/switchSort"
         app:layout_constraintStart_toEndOf="@+id/switchSort"
         app:layout_constraintTop_toTopOf="@+id/switchSort" />
