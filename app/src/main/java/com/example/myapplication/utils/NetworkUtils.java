@@ -37,9 +37,8 @@ public class NetworkUtils {
 
     private static URL buildURLToVideos(int id){
         Uri uri = Uri.parse(String.format(BASE_URL_VIDEOS, id)).buildUpon()
-                .appendQueryParameter(API_KEY, API_KEY)
-                .appendQueryParameter(LANGUAGE_VALUE, LANGUAGE_VALUE)
-                .build();
+                .appendQueryParameter(PARAMS_API_KEY, API_KEY)
+                .appendQueryParameter(PARAMS_LANGUAGE, LANGUAGE_VALUE).build();
         try {
             return new URL(uri.toString());
         } catch (MalformedURLException e) {
@@ -50,9 +49,7 @@ public class NetworkUtils {
 
     private static URL buildURLToReviews(int id){
         Uri uri = Uri.parse(String.format(BASE_URL_REVIEWS, id)).buildUpon()
-                .appendQueryParameter(API_KEY, API_KEY)
-                .appendQueryParameter(LANGUAGE_VALUE, LANGUAGE_VALUE)
-                .build();
+                .appendQueryParameter(PARAMS_API_KEY, API_KEY).build();
         try {
             return new URL(uri.toString());
         } catch (MalformedURLException e) {
@@ -122,7 +119,6 @@ public class NetworkUtils {
     }
 
     private static class JSONLoadTask extends AsyncTask<URL, Void, JSONObject> {
-
         @Override
         protected JSONObject doInBackground(URL... urls) {
             JSONObject result = null;

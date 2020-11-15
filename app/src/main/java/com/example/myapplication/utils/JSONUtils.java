@@ -26,7 +26,7 @@ public class JSONUtils {
     // Основная часть
     private static final String KEY_ID = "id";
     private static final String KEY_VOTE_COUNT = "vote_count";
-    private static final String KEY_TITLE = "title";
+    private static final String KEY_TITLE= "title";
     private static final String KEY_ORIGINAL_TITLE = "original_title";
     private static final String KEY_OVERVIEW = "overview";
     private static final String KEY_POSTER_PATH = "poster_path";
@@ -44,7 +44,7 @@ public class JSONUtils {
         }
         try {
             JSONArray jsonArray = jsonObject.getJSONArray(KEY_RESULTS);
-            for (int i=0; i<jsonArray.length(); i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObjectReview = jsonArray.getJSONObject(i);
                 String author = jsonObjectReview.getString(KEY_AUTHOR);
                 String content = jsonObjectReview.getString(KEY_CONTENT);
@@ -54,7 +54,7 @@ public class JSONUtils {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return result;
+        return  result;
     }
 
     public static ArrayList<Trailer> getTrailersFromJSON(JSONObject jsonObject){

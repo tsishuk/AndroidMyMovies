@@ -13,16 +13,10 @@ import com.example.myapplication.data.Trailer;
 
 import java.util.ArrayList;
 
-
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder> {
 
     private ArrayList<Trailer> trailers;
-
     private OnTrailerCLickListener onTrailerCLickListener;
-
-    public void setOnTrailerCLickListener(OnTrailerCLickListener onTrailerCLickListener) {
-        this.onTrailerCLickListener = onTrailerCLickListener;
-    }
 
     @NonNull
     @Override
@@ -46,10 +40,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         void onTrailerClick(String url);
     }
 
-    public void setTrailers(ArrayList<Trailer> trailers) {
-        this.trailers = trailers;
-    }
-
     class TrailerViewHolder extends RecyclerView.ViewHolder{
 
         private TextView textViewNameOfVideo;
@@ -66,5 +56,14 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
                 }
             });
         }
+    }
+
+    public void setTrailers(ArrayList<Trailer> trailers) {
+        this.trailers = trailers;
+        notifyDataSetChanged();
+    }
+
+    public void setOnTrailerCLickListener(OnTrailerCLickListener onTrailerCLickListener) {
+        this.onTrailerCLickListener = onTrailerCLickListener;
     }
 }

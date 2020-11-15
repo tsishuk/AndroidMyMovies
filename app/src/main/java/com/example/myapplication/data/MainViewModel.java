@@ -12,7 +12,6 @@ import androidx.loader.content.AsyncTaskLoader;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-
 public class MainViewModel extends AndroidViewModel {
 
     private static MovieDatabase database;
@@ -48,14 +47,12 @@ public class MainViewModel extends AndroidViewModel {
         return null;
     }
 
-    public void deleteAllMovies() { new DeleteMoviesTask().execute(); }
-
-    public LiveData<List<Movie>> getMovies() {
-        return movies;
-    }
-
     public LiveData<List<FavouriteMovie>> getFavouriteMovies() {
         return favouriteMovies;
+    }
+
+    public void deleteAllMovies() {
+        new DeleteMoviesTask().execute();
     }
 
     public void insertMovie(Movie movie){
@@ -64,6 +61,10 @@ public class MainViewModel extends AndroidViewModel {
 
     public void deleteMovie(Movie movie){
         new DeleteOneMovieTask().execute(movie);
+    }
+
+    public LiveData<List<Movie>> getMovies() {
+        return movies;
     }
 
     public void insertFavouriteMovie(FavouriteMovie movie){

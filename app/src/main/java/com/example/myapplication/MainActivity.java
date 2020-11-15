@@ -33,6 +33,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewPosters;
+    private MovieAdapter movieAdapter;
+    private Switch switchSort;
+    private TextView tvPopularity;
+    private TextView tvTopRated;
+    private MainViewModel viewModel;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,24 +62,28 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private MovieAdapter movieAdapter;
-    private Switch switchSort;
-    private TextView tvPopularity;
-    private TextView tvTopRated;
-    private MainViewModel viewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         switchSort = findViewById(R.id.switchSort);
-        recyclerViewPosters = findViewById(R.id.recyclerViewPosters);
         tvPopularity = findViewById(R.id.textViewPopularity);
         tvTopRated = findViewById(R.id.textViewTopRated);
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
+        recyclerViewPosters = findViewById(R.id.recyclerViewPosters);
         recyclerViewPosters.setLayoutManager(new GridLayoutManager(this, 2));
         movieAdapter = new MovieAdapter();
+        recyclerViewPosters.setAdapter(movieAdapter);
+        switchSort.setChecked(true);
+        switchSort.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                setMethodOfSort(b);
+            }
+        });
+        switchSort.setChecked(false);
+
+
         movieAdapter.setOnPosterClickListener(new MovieAdapter.onPosterClickListener() {
             @Override
             public void onPosterClick(int position) {
@@ -90,17 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "End Reached", Toast.LENGTH_SHORT).show();
             }
         });
-        recyclerViewPosters.setAdapter(movieAdapter);
-
-
-        switchSort.setChecked(true);
-        switchSort.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                setMethodOfSort(b);
-            }
-        });
-        switchSort.setChecked(false);
 
         LiveData<List<Movie>> moviesFromLiveData = viewModel.getMovies();
         moviesFromLiveData.observe(this, new Observer<List<Movie>>() {
@@ -113,10 +111,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setPopularity(View view) {
+        setMethodOfSort(false);
         switchSort.setChecked(false);
     }
 
     public void setTopRated(View view) {
+        setMethodOfSort(true);
         switchSort.setChecked(true);
     }
 
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void downloadData(int methodOfSort, int page) {
-        JSONObject jsonObject = NetworkUtils.getJSONFROMNetwork(methodOfSort, page);
+        JSONObject jsonObject = NetworkUtils.getJSONFROMNetwork(methodOfSort, 1);
         ArrayList<Movie> movies = JSONUtils.getMoviesFromJSON(jsonObject);
         if (movies != null && !movies.isEmpty()){
             viewModel.deleteAllMovies();

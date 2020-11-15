@@ -22,6 +22,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private onPosterClickListener onPosterClickListener;
     private onReachEndListener onReachEndListener;
 
+
+
+    public MovieAdapter() {
+        movies = new ArrayList<>();
+    }
+
+    public interface onPosterClickListener{
+        void onPosterClick(int position);
+    }
+
+    public interface onReachEndListener{
+        void onReachEnd();
+    }
+
     public void setOnPosterClickListener(MovieAdapter.onPosterClickListener onPosterClickListener) {
         this.onPosterClickListener = onPosterClickListener;
     }
@@ -29,20 +43,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void setOnReachEndListener(MovieAdapter.onReachEndListener onReachEndListener) {
         this.onReachEndListener = onReachEndListener;
     }
-
-    public MovieAdapter() {
-        movies = new ArrayList<>();
-    }
-
-    interface onPosterClickListener{
-        void onPosterClick(int position);
-    }
-
-    interface onReachEndListener{
-        void onReachEnd();
-    }
-
-
 
     @NonNull
     @Override
@@ -86,21 +86,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             });
         }
     }
-    //
-
-    public void addMovies(List<Movie> movies) {
-        this.movies.addAll(movies);
-        notifyDataSetChanged();
-    }
-
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
         notifyDataSetChanged();
     }
 
+    public void addMovies(List<Movie> movies) {
+        this.movies.addAll(movies);
+        notifyDataSetChanged();
+    }
+
     public List<Movie> getMovies() {
         return movies;
     }
-
 }

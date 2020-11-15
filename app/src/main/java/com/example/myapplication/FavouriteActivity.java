@@ -57,21 +57,10 @@ public class FavouriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favourite);
         recyclerViewFavouriteMovies = findViewById(R.id.recyclerViewFavouriteMovies);
         recyclerViewFavouriteMovies.setLayoutManager(new GridLayoutManager(this, 2));
-
         adapter = new MovieAdapter();
-        adapter.setOnPosterClickListener(new MovieAdapter.onPosterClickListener() {
-            @Override
-            public void onPosterClick(int position) {
-                Movie movie = adapter.getMovies().get(position);
-                Intent intent  =new Intent(FavouriteActivity.this, DetailActivity.class);
-                intent.putExtra("id", movie.getId());
-                startActivity(intent);
-            }
-        });
-
         recyclerViewFavouriteMovies.setAdapter(adapter);
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         LiveData<List<FavouriteMovie>> favouriteMovies = viewModel.getFavouriteMovies();
         favouriteMovies.observe(this, new Observer<List<FavouriteMovie>>() {
             @Override
@@ -83,7 +72,14 @@ public class FavouriteActivity extends AppCompatActivity {
                 }
             }
         });
-
-
+        adapter.setOnPosterClickListener(new MovieAdapter.onPosterClickListener() {
+            @Override
+            public void onPosterClick(int position) {
+                Movie movie = adapter.getMovies().get(position);
+                Intent intent  =new Intent(FavouriteActivity.this, DetailActivity.class);
+                intent.putExtra("id", movie.getId());
+                startActivity(intent);
+            }
+        });
     }
 }
